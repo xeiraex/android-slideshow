@@ -42,21 +42,21 @@ public class FileItemHelper {
 	 * @param includeDirectories Whether or not to include directories.
 	 * @param includeSubDirectories Whether or not to include sub directories.
      */
-    public List<FileItem> getFileList(@NonNull String currentPath, boolean includeDirectories,
+	public List<FileItem> getFileList(@NonNull String currentPath, boolean includeDirectories,
 			boolean includeSubDirectories){
-        Log.d(TAG, "updateFileList currentPath: "+currentPath);
+		Log.d(TAG, "updateFileList currentPath: "+currentPath);
 
-        // Create file list
-        List<File> folderList = new ArrayList<>();
-        List<FileItem> fileList = new ArrayList<>();
-        File dir = new File(currentPath);
+		// Create file list
+		List<File> folderList = new ArrayList<>();
+		List<FileItem> fileList = new ArrayList<>();
+		File dir = new File(currentPath);
 
-        File[] files = dir.listFiles();
-        if (files != null){
+		File[] files = dir.listFiles();
+		if (files != null){
 			// Check hidden file preference
 			boolean showHiddenFiles = PreferenceManager.getDefaultSharedPreferences(context).getBoolean("show_hidden_files", false);
-	    Arrays.sort(files);
-            for (File file : files){
+			Arrays.sort(files);
+			for (File file : files){
 				// Test hidden files
 				if (showHiddenFiles || !file.getName().startsWith(".")) {
 					// Test directories
@@ -66,14 +66,14 @@ public class FileItemHelper {
 						folderList.add(file);
 					}
 				}
-            }
-	    Collections.shuffle(folderList);
-	    for (File folder : folderList) {
-		fileList.addAll(getFileList(folder.getAbsolutePath(), includeDirectories, includeSubDirectories));
-	    }
-        }
-        return fileList;
-    }
+			}
+			Collections.shuffle(folderList);
+			for (File folder : folderList) {
+				fileList.addAll(getFileList(folder.getAbsolutePath(), includeDirectories, includeSubDirectories));
+			}
+		}
+		return fileList;
+	}
 
 	/**
 	 * Create a fileitem from the given file.
