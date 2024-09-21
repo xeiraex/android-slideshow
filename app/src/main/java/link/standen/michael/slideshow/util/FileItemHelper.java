@@ -46,6 +46,7 @@ public class FileItemHelper {
         Log.d(TAG, "updateFileList currentPath: "+currentPath);
 
         // Create file list
+        List<File> folderList = new ArrayList<>();
         List<FileItem> fileList = new ArrayList<>();
         File dir = new File(currentPath);
 
@@ -53,6 +54,7 @@ public class FileItemHelper {
         if (files != null){
 			// Check hidden file preference
 			boolean showHiddenFiles = PreferenceManager.getDefaultSharedPreferences(context).getBoolean("show_hidden_files", false);
+	    Collections.sort(files);
             for (File file : files){
 				// Test hidden files
 				if (showHiddenFiles || !file.getName().startsWith(".")) {
@@ -60,12 +62,15 @@ public class FileItemHelper {
 					if (includeDirectories || !file.isDirectory()) {
 						fileList.add(createFileItem(file));
 					} else if (includeSubDirectories){
-						fileList.addAll(getFileList(file.getAbsolutePath(), includeDirectories, includeSubDirectories));
+						folderList.add(file);
 					}
 				}
             }
+	    folderList.shuffle();
+	    for (File folder : folderlist) {
+		fileList.addAll(getFileList(folder.getAbsolutePath(), includeDirectories, includeSubDirectories));
+	    }
         }
-        Collections.sort(fileList);
         return fileList;
     }
 
