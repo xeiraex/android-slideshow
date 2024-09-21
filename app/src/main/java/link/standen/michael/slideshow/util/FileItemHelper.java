@@ -66,7 +66,7 @@ public class FileItemHelper {
 					}
 				}
             }
-	    folderList.shuffle();
+	    Collections.shuffle(folderList);
 	    for (File folder : folderlist) {
 		fileList.addAll(getFileList(folder.getAbsolutePath(), includeDirectories, includeSubDirectories));
 	    }
