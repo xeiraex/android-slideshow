@@ -54,7 +54,7 @@ public class FileItemHelper {
         if (files != null){
 			// Check hidden file preference
 			boolean showHiddenFiles = PreferenceManager.getDefaultSharedPreferences(context).getBoolean("show_hidden_files", false);
-	    Collections.sort(files);
+	    Arrays.sort(files);
             for (File file : files){
 				// Test hidden files
 				if (showHiddenFiles || !file.getName().startsWith(".")) {
